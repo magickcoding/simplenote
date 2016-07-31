@@ -1,8 +1,13 @@
 'use strict';
 
-var app = require( 'app' );	 // Module to control application life.
-var Menu = require( 'menu' );
-var BrowserWindow = require( 'browser-window' );	// Module to create native browser window.
+// var app = require( 'app' );	 // Module to control application life.
+// var Menu = require( 'menu' );
+// var BrowserWindow = require( 'browser-window' );	// Module to create native browser window.
+const electron = require( 'electron' );
+const app = require( 'electron' ).app;
+const Menu = require( 'electron' ).Menu;
+const crashReporter = electron.crashReporter;
+var BrowserWindow = require('electron').BrowserWindow;
 var path = require('path');
 var ipcMain = require( 'electron' ).ipcMain;
 
@@ -14,7 +19,14 @@ module.exports = function main() {
 	var url = 'file://' + path.join( __dirname, '..', 'dist', 'index.html' );
 
 	// Report crashes to our server.
-	require( 'crash-reporter' ).start();
+	// require( 'crash-reporter' ).start();
+    crashReporter.start({
+        productName: "simplenote",
+        companyName: "Magick King",
+        submitURL: "http://www.test.com",
+        autoSubmit: true
+    });
+
 	require( './updater' )();
 
 	// Keep a global reference of the window object, if you don't, the window will
@@ -46,6 +58,7 @@ module.exports = function main() {
 
 		// and load the index of the app.
 		if ( typeof mainWindow.loadURL === 'function' ) {
+            console.log(url);
 			mainWindow.loadURL( url );
 		} else {
 			mainWindow.loadUrl( url );
@@ -83,7 +96,8 @@ module.exports = function main() {
 };
 
 function createMenuTemplate( settings ) {
-	const name = require( 'app' ).getName();
+	// const name = require( 'app' ).getName();
+	const name = "Simplenote";
 
 	const aboutMenuItem = {
 		label: 'About ' + name,

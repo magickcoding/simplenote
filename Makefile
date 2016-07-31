@@ -20,6 +20,9 @@ SIMPLENOTE_JS := $(THIS_DIR)/dist/app.js
 SIMPLENOTE_CHANGES_STD := `find "$(THIS_DIR)" -newer "$(SIMPLENOTE_JS)" \( -name "*.js" -o -name "*.jsx" -o -name "*.json" -o -name "*.scss" \) -type f -print -quit | grep -v .min. | wc -l`
 SIMPLENOTE_BRANCH = $(shell git --git-dir .git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
+run: build
+	$(START_APP)
+
 # check for config
 config:
 	@test -s $(THIS_DIR)/config.js || { echo "config.js not found. Required file, see docs"; exit 1; }
