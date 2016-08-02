@@ -3,13 +3,16 @@
 // var app = require( 'app' );	 // Module to control application life.
 // var Menu = require( 'menu' );
 // var BrowserWindow = require( 'browser-window' );	// Module to create native browser window.
+
 const electron = require( 'electron' );
-const app = require( 'electron' ).app;
-const Menu = require( 'electron' ).Menu;
+const app = electron.app;
+const Menu = electron.Menu;
 const crashReporter = electron.crashReporter;
-var BrowserWindow = require('electron').BrowserWindow;
+const shell = electron.shell;
+const ipcMain = electron.ipcMain;
+const BrowserWindow = electron.BrowserWindow;
+
 var path = require('path');
-var ipcMain = require( 'electron' ).ipcMain;
 
 var buildViewMenu = require( './menus/view-menu' );
 
@@ -55,12 +58,15 @@ module.exports = function main() {
 			minHeight: 520,
 			icon: iconPath
 		} );
-
+        console.log("000000000000000000----------000000000000000000")
+        debugger;
 		// and load the index of the app.
 		if ( typeof mainWindow.loadURL === 'function' ) {
-            console.log(url);
+            console.log("++++++++" + url);
 			mainWindow.loadURL( url );
 		} else {
+            console.log("----------" + url);
+			mainWindow.loadURL( url );
 			mainWindow.loadUrl( url );
 		}
 
@@ -131,7 +137,7 @@ function createMenuTemplate( settings ) {
 		submenu: [ {
 			label: 'Help && Support',
 			click: function() {
-				require( 'shell' ).openExternal( 'http://simplenote.com/help' )
+				shell.openExternal( 'http://simplenote.com/help' )
 			}
 		} ]
 	};
